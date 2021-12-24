@@ -18,7 +18,7 @@ public class NBody{
             double xxVel = in.readDouble();
             double yyVel = in.readDouble();
             double mass = in.readDouble();
-            String img = in.readString();
+            String img = "images/"+in.readString();
             planets[i] = new Planet(xxPos, yyPos, xxVel, yyVel, mass, img);
         }
         return planets;
@@ -48,6 +48,13 @@ public class NBody{
             /* Shows the drawing to the screen. */
 		    StdDraw.show();
             StdDraw.pause(10);
+        }
+        StdOut.printf("%d\n", planets.length);
+        StdOut.printf("%.2e\n", radius);
+        for (int i = 0; i < planets.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+            planets[i].xxPos, planets[i].yyPos, planets[i].xxVel,
+            planets[i].yyVel, planets[i].mass, planets[i].imgFileName);   
         }
     }
 }
