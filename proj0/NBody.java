@@ -1,7 +1,7 @@
 public class NBody{
-    static int n;
-    static double radius;
-    static In in;
+    private static int n;
+    private static double radius;
+    private static In in;
     public static double readRadius(String s){
         in = new In(s);
         n = in.readInt();
