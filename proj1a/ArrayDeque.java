@@ -1,42 +1,45 @@
 public class ArrayDeque<T> {
     private T[] items;
     private int size;
+    private int start;
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
+        start = 4;
     }
 
-    public ArrayDeque(ArrayDeque<T> other){
-        items = (T[])new Object[other.size()];
-        System.arraycopy(other.getItems(), 0, items, 0, size);
-        size = other.size();
-    }
+//    public ArrayDeque(ArrayDeque<T> other) {
+//        items = (T[]) new Object[other.size()];
+//        System.arraycopy(other.items, 0, items, 0, size);
+//        size = other.size();
+//    }
 
-    public void addFirst(T item){
-        if(size == items.length)
-            resize(size+1, 0, 1, size);
-        else
-            resize(items.length, 0, 1, size);
-        items[0] = item;
+    public void addFirst(T item) {
+        if(start == 0){
+            resize(2 * size, start, size/2, size);
+        }
+        start = size / 2;
+        items[--start] = item;
         size++;
     }
 
-    private void resize(int capacity, int srcPos, int desPos, int len){
+    private void resize(int capacity, int srcPos, int desPos, int len) {
         T[] a = (T[]) new Object[capacity];
         System.arraycopy(items, srcPos, a, desPos, len);
         items = a;
     }
 
-    public void addLast(T item){
-        if(size == items.length){
-            resize(size+1, 0, 0, size);
+    public void addLast(T item) {
+        if(start + size == items.length){
+            resize(size * 2, start, size / 2, size);
         }
-        items[size] = item;
+        start = size / 2;
+        items[start + size] = item;
         size++;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
@@ -44,34 +47,36 @@ public class ArrayDeque<T> {
         return size;
     }
 
-    public void printDeque(){
-        for(int i=0; i<size; ++i){
-            System.out.print(items[i] + " ");
+    public void printDeque() {
+        for(int i = 0; i < size; ++i){
+            System.out.print(items[start + i] + " ");
         }
         System.out.println();
     }
 
-    public T removeFirst(){
-        if(isEmpty()) return null;
-        T item = items[0];
-        resize(size-1, 1, 0, size-1);
+    public T removeFirst() {
+        if(isEmpty()) {
+            return null;
+        }
+        T item = items[start];
+        start++;
         size--;
         return item;
     }
 
-    public T removeLast(){
-        if(isEmpty())return null;
-        T item = items[--size];
+    public T removeLast() {
+        if(isEmpty()) {
+            return null;
+        }
+        T item = items[start + size - 1];
+        size--;
         return item;
     }
 
-    public T get(int index){
-        if(index >= size) return null;
-        return items[index];
+    public T get(int index) {
+        if(index >= size) {
+            return null;
+        }
+        return items[start + index];
     }
-
-    public T[] getItems(){
-        return items;
-    }
-
 }
