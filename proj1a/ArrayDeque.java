@@ -9,30 +9,30 @@ public class ArrayDeque<T> {
 
     public ArrayDeque(ArrayDeque<T> other){
         items = (T[])new Object[other.size()];
-        System.arraycopy(other.items,0,items,0,size);
+        System.arraycopy(other.getItems(), 0, items, 0, size);
         size = other.size();
     }
 
     public void addFirst(T item){
         if(size == items.length)
-            resize(size+1,0,1,size);
+            resize(size+1, 0, 1, size);
         else
-            resize(items.length,0,1,size);
-        items[0]=item;
+            resize(items.length, 0, 1, size);
+        items[0] = item;
         size++;
     }
 
-    private void resize(int capacity,int srcPos,int desPos,int len){
-        T[] a = (T[])new Object[capacity];
-        System.arraycopy(items,srcPos,a,desPos,len);
+    private void resize(int capacity, int srcPos, int desPos, int len){
+        T[] a = (T[]) new Object[capacity];
+        System.arraycopy(items, srcPos, a, desPos, len);
         items = a;
     }
 
     public void addLast(T item){
         if(size == items.length){
-            resize(size+1,0,0,size);
+            resize(size+1, 0, 0, size);
         }
-        items[size]=item;
+        items[size] = item;
         size++;
     }
 
@@ -45,8 +45,8 @@ public class ArrayDeque<T> {
     }
 
     public void printDeque(){
-        for(int i=0;i<size;++i){
-            System.out.print(items[i]+" ");
+        for(int i=0; i<size; ++i){
+            System.out.print(items[i] + " ");
         }
         System.out.println();
     }
@@ -54,7 +54,7 @@ public class ArrayDeque<T> {
     public T removeFirst(){
         if(isEmpty()) return null;
         T item = items[0];
-        resize(size-1,1,0,size-1);
+        resize(size-1, 1, 0, size-1);
         size--;
         return item;
     }
@@ -66,8 +66,12 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index){
-        if(index>=size) return null;
+        if(index >= size) return null;
         return items[index];
+    }
+
+    public T[] getItems(){
+        return items;
     }
 
 }
