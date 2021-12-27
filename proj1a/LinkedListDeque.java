@@ -3,16 +3,10 @@ public class LinkedListDeque<T> {
         public T item;
         public Node prev;
         public Node next;
-        public Node(T i) {
-            item = i;
-            prev = next = null;
-        }
-
-        T getRecursive(int index) {
-            if(index == 0){
-                return item;
-            }
-            return next.getRecursive(index - 1);
+        public Node(T item, Node prev, Node next) {
+            this.item = item;
+            this.prev = prev;
+            this.next = next;
         }
     }
 
@@ -20,39 +14,24 @@ public class LinkedListDeque<T> {
     private int size;
 
     public LinkedListDeque() {
-        sentinal = new Node(null);
+        sentinal = new Node(null, null, null);
         sentinal.prev = sentinal;
         sentinal.next = sentinal;
         size = 0;
     }
 
-//    public LinkedListDeque(LinkedListDeque<T> other) {
-//        sentinal = new Node(null);
-//        sentinal.prev = sentinal;
-//        sentinal.next = sentinal;
-//        size=0;
-//
-//        for(int i = 0;i < other.size(); i++) {
-//            addLast(other.get(i));
-//        }
-//    }
-
     public void addFirst(T item) {
-        Node n = new Node(item);
-        n.next = sentinal.next;
+        Node n = new Node(item, sentinal, sentinal.next);
         sentinal.next.prev = n;
-        n.prev = sentinal;
         sentinal.next = n;
-        size++;
+        size += 1;
     }
 
     public void addLast(T item) {
-        Node n = new Node(item);
-        n.prev = sentinal.prev;
+        Node n = new Node(item, sentinal.prev, sentinal);
         sentinal.prev.next = n;
-        n.next = sentinal;
         sentinal.prev = n;
-        size++;
+        size += 1;
     }
 
     public T removeFirst() {
@@ -113,13 +92,13 @@ public class LinkedListDeque<T> {
         if(size == 0 || index >= size) {
             return null;
         }
-        return sentinal.next.getRecursive(index);
+        return getR(sentinal.next, index);
     }
 
-    private T get(Node n, int index) {
+    private T getR(Node n, int index) {
         if(index == 0) {
             return n.item;
         }
-        return get(n.next, index-1);
+        return getR(n.next, index-1);
     }
 }
