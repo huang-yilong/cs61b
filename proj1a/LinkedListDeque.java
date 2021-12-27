@@ -1,8 +1,8 @@
 public class LinkedListDeque<T> {
     private class Node {
-        public T item;
-        public Node prev;
-        public Node next;
+        private T item;
+        private Node prev;
+        private Node next;
         public Node(T item, Node prev, Node next) {
             this.item = item;
             this.prev = prev;
@@ -35,7 +35,7 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         T item = sentinal.next.item;
@@ -46,7 +46,7 @@ public class LinkedListDeque<T> {
     }
 
     public T removeLast() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         T item = sentinal.prev.item;
@@ -56,49 +56,49 @@ public class LinkedListDeque<T> {
         return item;
     }
 
-    public boolean isEmpty(){
-        return sentinal.next==sentinal;
+    public boolean isEmpty() {
+        return sentinal.next == sentinal;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
     public void printDeque() {
-        if (isEmpty()){
+        if (isEmpty()) {
             System.out.println();
             return;
         }
         Node cur = sentinal.next;
-        while(cur != sentinal){
-            System.out.print(cur.item+" ");
+        while (cur != sentinal) {
+            System.out.print(cur.item + " ");
             cur = cur.next;
         }
         System.out.println();
     }
 
     public T get(int index) {
-        if(index >= size) {
+        if (index >= size) {
             return null;
         }
         Node cur = sentinal.next;
-        for(int i = 0;i < index;++i) {
-            cur=cur.next;
+        for (int i = 0; i < index; ++i) {
+            cur = cur.next;
         }
         return cur.item;
     }
 
     public T getRecursive(int index) {
-        if(size == 0 || index >= size) {
+        if (size == 0 || index >= size) {
             return null;
         }
         return getR(sentinal.next, index);
     }
 
     private T getR(Node n, int index) {
-        if(index == 0) {
+        if (index == 0) {
             return n.item;
         }
-        return getR(n.next, index-1);
+        return getR(n.next, index - 1);
     }
 }

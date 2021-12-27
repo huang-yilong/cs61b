@@ -26,7 +26,7 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if(size == items.length) {
+        if (size == items.length) {
             resize(size * 2);
         }
         items[nextfirst] = item;
@@ -47,7 +47,7 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T item) {
-        if(size == items.length) {
+        if (size == items.length) {
             resize(2 * size);
         }
         items[nextlast] = item;
@@ -80,22 +80,28 @@ public class ArrayDeque<T> {
         T item = items[nextfirst];
         items[nextfirst] = null;
         size -= 1;
+        if (items.length >= 16 && size < (items.length / 4)) {
+            resize(items.length / 2);
+        }
         return item;
     }
 
     public T removeLast() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         nextlast = subOne(nextlast);
         T item = items[nextlast];
         items[nextlast] = null;
         size -= 1;
+        if (items.length >= 16 && size < (items.length / 4)) {
+            resize(items.length / 2);
+        }
         return item;
     }
 
     public T get(int index) {
-        if(index >= size) {
+        if (index >= size) {
             return null;
         }
         int cur = addOne(nextfirst);
