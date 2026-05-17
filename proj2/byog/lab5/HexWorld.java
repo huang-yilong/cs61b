@@ -148,6 +148,24 @@ public class HexWorld {
         }
     }
 
+    /**
+     * Public entry point for generating the 19-hex tessellated world (3,4,5,4,3 columns).
+     * This is useful for reusing the lab5 world generator from the main BYOG game.
+     */
+    public static TETile[][] generateTessellatedWorld(int width, int height, int s, long seed) {
+        TETile[][] world = new TETile[width][height];
+        for (int x = 0; x < width; x += 1) {
+            for (int y = 0; y < height; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
+
+        // A reasonable default that fits for typical sizes (e.g. 80x30 or larger).
+        Position topLeft = new Position(5, height - (2 * s + 1));
+        drawTessellatedWorld(world, topLeft, s, seed);
+        return world;
+    }
+
     @Test
     public void testRowWidthAndOffset() {
         // s=2: widths should be [2,4,4,2], offsets [1,0,0,1]
